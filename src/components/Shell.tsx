@@ -22,7 +22,8 @@ import {
   UserCheck,
   LogOut,
   Building2,
-  CheckCircle2
+  CheckCircle2,
+  BrainCircuit
 } from 'lucide-react';
 import { useStore } from '../context/Store';
 import { can, visibleInstruments } from '../utils/logic';
@@ -112,6 +113,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
             label: 'Scrutiny Cell',
             items: [
               { label: 'Dashboard', path: '/app/dashboard', icon: LayoutDashboard },
+              { label: 'FDR Intelligence', path: '/app/intelligence', icon: BrainCircuit, permission: 'canViewIntelligence' },
               { label: 'Scrutiny Queue', path: '/app/verification', icon: ShieldCheck, permission: 'canReviewFdr' },
               { label: 'FDR Records Registry', path: '/app/repository', icon: Wallet }
             ]
@@ -138,6 +140,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
             label: 'Sanctions Directorate',
             items: [
               { label: 'Dashboard', path: '/app/dashboard', icon: LayoutDashboard },
+              { label: 'FDR Intelligence', path: '/app/intelligence', icon: BrainCircuit, permission: 'canViewIntelligence' },
               { label: 'Release Requests', path: '/app/releases', icon: ArrowDownToLine, permission: 'canApproveRelease' },
               { label: 'FDR Records Registry', path: '/app/repository', icon: Wallet }
             ]

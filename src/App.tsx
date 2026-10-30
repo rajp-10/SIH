@@ -16,6 +16,7 @@ import { AuditPage } from './pages/AuditPage';
 import { ReportsPage } from './pages/ReportsPage';
 import { UsersPage } from './pages/UsersPage';
 import { SettingsPage } from './pages/SettingsPage';
+import { IntelligencePage } from './pages/IntelligencePage';
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const store = useStore();
@@ -62,6 +63,16 @@ export default function App() {
           <ProtectedRoute>
             <Shell>
               <DashboardPage />
+            </Shell>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/app/intelligence"
+        element={
+          <ProtectedRoute>
+            <Shell>
+              <IntelligencePage />
             </Shell>
           </ProtectedRoute>
         }

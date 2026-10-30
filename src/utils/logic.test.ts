@@ -12,6 +12,7 @@ import {
 } from './logic';
 import { initialState, seedInstruments } from '../data/seed';
 import { DEMO_USERS, validateDemoCredentials, findDemoUserByEmail, findDemoUserByRole } from '../data/auth';
+import { analyzeFdrIntelligence } from './intelligence';
 import type { Role, Instrument, WorkflowRequest } from '../types';
 
 describe('FDR Guardian — Core Logic & RBAC Test Suite', () => {
@@ -226,6 +227,30 @@ describe('FDR Guardian — Core Logic & RBAC Test Suite', () => {
       expect(can('Approving Authority', 'canManageUsers')).toBe(false);
     });
 
+    it('CRITICAL RBAC: Restricts FDR Intelligence to Reviewing Official and Approving Authority only', () => {
+      expect(can('AICTE Reviewing Official', 'canViewIntelligence')).toBe(true);
+      expect(can('Approving Authority', 'canViewIntelligence')).toBe(true);
+      expect(can('Institution User', 'canViewIntelligence')).toBe(false);
+      expect(can('System Administrator', 'canViewIntelligence')).toBe(false);
+    });
+
+    it('Enforces separation of duties between Reviewer scrutiny and Approver sanction', () => {
+      // Reviewer can scrutinize and flag discrepancies, but CANNOT approve release
+      expect(can('AICTE Reviewing Official', 'canReviewFdr')).toBe(true);
+      expect(can('AICTE Reviewing Official', 'canFlagDiscrepancy')).toBe(true);
+      expect(can('AICTE Reviewing Official', 'canApproveRelease')).toBe(false);
+
+      // Approver can approve release, but CANNOT perform administrative scrutiny or flag discrepancies
+      expect(can('Approving Authority', 'canApproveRelease')).toBe(true);
+      expect(can('Approving Authority', 'canReviewFdr')).toBe(false);
+      expect(can('Approving Authority', 'canFlagDiscrepancy')).toBe(false);
+
+      // System Administrator cannot perform scrutiny, approval, or access financial intelligence
+      expect(can('System Administrator', 'canReviewFdr')).toBe(false);
+      expect(can('System Administrator', 'canApproveRelease')).toBe(false);
+      expect(can('System Administrator', 'canViewIntelligence')).toBe(false);
+    });
+
     it('Restricts Institution User to records within their assigned institutional scope', () => {
       const state = {
         ...initialState,
@@ -286,6 +311,158 @@ describe('FDR Guardian — Core Logic & RBAC Test Suite', () => {
       const formatted = formatDate('2026-10-30');
       expect(formatted).toContain('30');
       expect(formatted).toContain('2026');
+    });
+  });
+
+  describe('FDR Intelligence — Smart Validation Engine & Risk Indicators', () => {
+    it('calculates dynamic intelligence metrics from active repository records', () => {
+      const summary = analyzeFdrIntelligence(seedInstruments, [], 'AICTE Reviewing Official');
+      expect(summary.totalAnalyzed).toBe(seedInstruments.length);
+      expect(summary.findings.length).toBeGreaterThan(0);
+      expect(summary.recordsRequiringAttention).toBeGreaterThan(0);
+      expect(summary.riskIndicators.length).toBe(seedInstruments.length);
+    });
+
+    it('Rule 1: detects duplicate FDR number conflicts across instruments', () => {
+      const instA: Instrument = {
+        ...seedInstruments[0],
+        id: 'FDR-TEST-1',
+        fdrNumber: 'DUP-9999'
+      };
+      const instB: Instrument = {
+        ...seedInstruments[1],
+        id: 'FDR-TEST-2',
+        fdrNumber: 'DUP-9999'
+      };
+
+      const summary = analyzeFdrIntelligence([instA, instB], [], 'AICTE Reviewing Official');
+      const dupFindings = summary.findings.filter(f => f.category === 'Duplicate');
+
+      expect(dupFindings.length).toBe(2);
+      expect(dupFindings[0].severity).toBe('Critical');
+      expect(dupFindings[0].issue).toContain('Duplicate FDR Number');
+      expect(summary.potentialDuplicatesCount).toBe(2);
+    });
+
+    it('Rule 2: detects missing mandatory fields and non-positive amount', () => {
+      const invalidInst: Instrument = {
+        ...seedInstruments[0],
+        id: 'FDR-INVALID-MAND',
+        bank: '',
+        amount: -5000
+      };
+
+      const summary = analyzeFdrIntelligence([invalidInst], [], 'Institution User');
+      const mandFindings = summary.findings.filter(f => f.category === 'Mandatory Field');
+
+      expect(mandFindings.length).toBeGreaterThan(0);
+      expect(mandFindings[0].severity).toBe('Critical');
+      expect(mandFindings[0].explanation).toContain('required regulatory data');
+    });
+
+    it('Rule 3: detects chronological date sequence errors and inverted tenure', () => {
+      const invertedInst: Instrument = {
+        ...seedInstruments[0],
+        id: 'FDR-DATE-INV',
+        issueDate: '2026-12-01',
+        maturityDate: '2026-01-01'
+      };
+
+      const summary = analyzeFdrIntelligence([invertedInst], [], 'Institution User');
+      const dateFindings = summary.findings.filter(f => f.category === 'Date Sequence' && f.severity === 'Critical');
+
+      expect(dateFindings.length).toBe(1);
+      expect(dateFindings[0].issue).toContain('Maturity Date Precedes');
+    });
+
+    it('Rule 4: detects missing documents and incomplete metadata', () => {
+      const missingDocInst: Instrument = {
+        ...seedInstruments[0],
+        id: 'FDR-NO-DOCS',
+        documents: [],
+        documentStatus: 'Missing Documents'
+      };
+
+      const summary = analyzeFdrIntelligence([missingDocInst], [], 'Institution User');
+      const docFindings = summary.findings.filter(f => f.category === 'Document Metadata');
+
+      expect(docFindings.length).toBe(1);
+      expect(docFindings[0].issue).toContain('Incomplete Document Metadata');
+    });
+
+    it('Rule 5: detects active scrutiny discrepancies and status contradictions', () => {
+      const contradictoryInst: Instrument = {
+        ...seedInstruments[0],
+        id: 'FDR-CONTRADICTION',
+        verification: 'Verified by Authorized Reviewer',
+        documentStatus: 'Missing Documents'
+      };
+
+      const summary = analyzeFdrIntelligence([contradictoryInst], [], 'AICTE Reviewing Official');
+      const contrFindings = summary.findings.filter(f => f.issue.includes('Status Contradiction'));
+
+      expect(contrFindings.length).toBe(1);
+      expect(contrFindings[0].severity).toBe('Critical');
+    });
+
+    it('Rule 6: validates replacement reference linkage and unreferenced predecessor', () => {
+      const orphanReplacement: Instrument = {
+        ...seedInstruments[0],
+        id: 'FDR-ORPHAN-REPL',
+        replacementFor: 'FDR-NON-EXISTENT-9999'
+      };
+
+      const summary = analyzeFdrIntelligence([orphanReplacement], [], 'AICTE Reviewing Official');
+      const replFindings = summary.findings.filter(f => f.category === 'Replacement Linkage');
+
+      expect(replFindings.length).toBe(1);
+      expect(replFindings[0].severity).toBe('Critical');
+      expect(replFindings[0].issue).toContain('Missing Predecessor');
+    });
+
+    it('evaluates transparent risk indicators with explicit justification', () => {
+      const summary = analyzeFdrIntelligence(seedInstruments, [], 'AICTE Reviewing Official');
+      for (const indicator of summary.riskIndicators) {
+        expect(['Critical', 'High', 'Medium', 'Low']).toContain(indicator.severity);
+        expect(indicator.primaryReason).toBeTruthy();
+        expect(indicator.details.length).toBeGreaterThan(0);
+        expect(indicator.recommendedAction).toBeTruthy();
+      }
+    });
+
+    it('categorizes maturity intelligence into distinct non-overlapping time horizons', () => {
+      const summary = analyzeFdrIntelligence(seedInstruments, [], 'AICTE Reviewing Official');
+      const breakdown = summary.maturityBreakdown;
+
+      expect(Array.isArray(breakdown.matured)).toBe(true);
+      expect(Array.isArray(breakdown.within7Days)).toBe(true);
+      expect(Array.isArray(breakdown.within30Days)).toBe(true);
+      expect(Array.isArray(breakdown.within60Days)).toBe(true);
+      expect(Array.isArray(breakdown.onSchedule)).toBe(true);
+
+      for (const item of breakdown.within7Days) {
+        expect(item.daysRemaining).toBeLessThanOrEqual(7);
+        expect(item.daysRemaining).toBeGreaterThanOrEqual(0);
+      }
+    });
+
+    it('strictly isolates intelligence to institution-specific records for Institution User', () => {
+      const instState = {
+        ...initialState,
+        role: 'Institution User' as Role,
+        institutionId: 'inst-1'
+      };
+
+      const scopedInsts = visibleInstruments(instState);
+      const summary = analyzeFdrIntelligence(scopedInsts, [], 'Institution User');
+
+      expect(summary.totalAnalyzed).toBe(scopedInsts.length);
+      for (const f of summary.findings) {
+        expect(f.institutionId).toBe('inst-1');
+      }
+      for (const r of summary.riskIndicators) {
+        expect(r.institutionId).toBe('inst-1');
+      }
     });
   });
 });

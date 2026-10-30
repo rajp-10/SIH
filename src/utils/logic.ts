@@ -14,6 +14,7 @@ export type Permission =
   | 'canConfigureSettings'
   | 'canViewAuditLog'
   | 'canExportReports'
+  | 'canViewIntelligence'
   // Legacy / granular permission keys for backward-compatibility
   | 'instrument:view-own'
   | 'instrument:view-scope'
@@ -48,6 +49,7 @@ export const rolePermissions: Record<Role, Permission[]> = {
     'canFlagDiscrepancy',
     'canViewAuditLog',
     'canExportReports',
+    'canViewIntelligence',
     'instrument:view-scope',
     'verification:review',
     'request:review',
@@ -59,6 +61,7 @@ export const rolePermissions: Record<Role, Permission[]> = {
     'canApproveRelease',
     'canViewAuditLog',
     'canExportReports',
+    'canViewIntelligence',
     'instrument:view-scope',
     'release:decide',
     'audit:view',

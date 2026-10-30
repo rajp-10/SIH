@@ -24,7 +24,8 @@ import {
   Landmark,
   X,
   Sparkles,
-  Command
+  Command,
+  BrainCircuit
 } from 'lucide-react';
 import { useStore } from '../../context/Store';
 import { can, visibleInstruments } from '../../utils/logic';
@@ -72,6 +73,18 @@ export function ActionSearchBar({ isOpen, onClose }: ActionSearchBarProps) {
       icon: <LayoutDashboard size={16} />,
       onSelect: () => navigate('/app/dashboard')
     });
+
+    if (can(store.role, 'canViewIntelligence')) {
+      actions.push({
+        id: 'nav-intel',
+        title: 'FDR Intelligence',
+        subtitle: 'Rule-based compliance validation, risk indicators, and maturity intelligence',
+        category: 'Navigation',
+        icon: <BrainCircuit size={16} />,
+        badge: store.role === 'Approving Authority' ? 'Sanctions' : 'Scrutiny',
+        onSelect: () => navigate('/app/intelligence')
+      });
+    }
 
     actions.push({
       id: 'nav-repo',

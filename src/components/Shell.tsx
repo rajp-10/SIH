@@ -195,25 +195,25 @@ export function Shell({ children }: { children: React.ReactNode }) {
         onClose={() => setCommandPaletteOpen(false)}
       />
 
-      {/* Sidebar Navigation */}
+      {/* Sidebar Navigation — Restrained Light Institutional Sidebar */}
       <aside className={`sidebar ${mobileMenuOpen ? 'open' : ''}`}>
         <div className="brand" onClick={() => navigate('/app/dashboard')} style={{ cursor: 'pointer' }}>
           <span className="brand-mark">
-            <Landmark size={20} />
+            <Landmark size={18} />
           </span>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <span style={{ fontWeight: 750, fontSize: '16px', letterSpacing: '-0.01em', color: '#FFFFFF' }}>FDR Guardian</span>
-            <small style={{ fontSize: '10px', color: 'var(--color-on-primary-faint)', fontWeight: 600 }}>Lifecycle Platform</small>
+            <span style={{ fontWeight: 750, fontSize: '15px', letterSpacing: '-0.01em', color: 'var(--color-heading)' }}>FDR Guardian</span>
+            <small style={{ fontSize: '10px', color: 'var(--color-text-muted)', fontWeight: 600 }}>Lifecycle Platform</small>
           </div>
         </div>
 
-        <div style={{ flex: 1, overflowY: 'auto', padding: '12px 0' }}>
+        <div style={{ flex: 1, overflowY: 'auto', padding: '8px 0' }}>
           {navGroups.map(group => {
             const permittedItems = group.items.filter(isNavPermitted);
             if (!permittedItems.length) return null;
 
             return (
-              <div key={group.label} style={{ marginBottom: '18px' }}>
+              <div key={group.label} style={{ marginBottom: '16px' }}>
                 <div className="side-label">{group.label}</div>
                 {permittedItems.map(item => {
                   const Icon = item.icon;
@@ -224,18 +224,19 @@ export function Shell({ children }: { children: React.ReactNode }) {
                       onClick={() => setMobileMenuOpen(false)}
                       className={({ isActive }) => `side-link ${isActive ? 'active' : ''}`}
                     >
-                      <Icon size={17} />
+                      <Icon size={16} />
                       <span>{item.label}</span>
                       {item.badge !== undefined && (
                         <span
                           style={{
                             marginLeft: 'auto',
-                            background: 'var(--color-accent)',
-                            color: 'var(--color-on-accent)',
-                            fontSize: '11px',
+                            background: 'var(--color-powder-blue)',
+                            color: 'var(--color-heading)',
+                            fontSize: '10px',
                             fontWeight: 700,
-                            padding: '1px 7px',
-                            borderRadius: 'var(--radius-full)'
+                            padding: '1px 6px',
+                            borderRadius: 'var(--radius-xs)',
+                            border: '1px solid var(--color-dusty-blue)'
                           }}
                         >
                           {item.badge}
@@ -250,31 +251,31 @@ export function Shell({ children }: { children: React.ReactNode }) {
         </div>
 
         {/* Sidebar Footer User Info & Sign Out */}
-        <div className="side-bottom" style={{ borderTop: '1px solid var(--color-on-primary-line)', paddingTop: '14px' }}>
-          <div style={{ padding: '0 12px 10px', fontSize: '12px', color: '#FFFFFF' }}>
-            <div style={{ fontWeight: 700, fontSize: '13px' }}>{store.currentUser.name}</div>
-            <div style={{ fontSize: '11px', color: 'var(--color-on-primary-muted)' }}>{store.role}</div>
-            <div style={{ fontSize: '10px', color: 'var(--color-on-primary-faint)', marginTop: '2px' }}>
+        <div className="side-bottom" style={{ borderTop: '1px solid var(--color-border)', paddingTop: '12px' }}>
+          <div style={{ padding: '0 8px 10px', fontSize: '12px' }}>
+            <div style={{ fontWeight: 700, fontSize: '13px', color: 'var(--color-heading)' }}>{store.currentUser.name}</div>
+            <div style={{ fontSize: '11px', color: 'var(--color-text-muted)' }}>{store.role}</div>
+            <div style={{ fontSize: '10px', color: 'var(--color-text-muted)', marginTop: '2px' }}>
               {store.role === 'Institution User' ? `Scope: ${store.institutionId}` : 'Scope: Central AICTE Oversight'}
             </div>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
             <button
               type="button"
               className="side-link"
-              style={{ background: 'transparent', border: 0, width: '100%', color: 'var(--color-on-primary-muted)' }}
+              style={{ background: 'transparent', border: 0, width: '100%', color: 'var(--color-text-muted)', fontSize: '12px' }}
               onClick={() => navigate('/')}
             >
-              <ArrowLeft size={15} /> Return to Overview
+              <ArrowLeft size={14} /> Return to Overview
             </button>
             <button
               type="button"
               className="side-link"
-              style={{ background: 'transparent', border: 0, width: '100%', color: '#FFB8B8' }}
+              style={{ background: 'transparent', border: 0, width: '100%', color: 'var(--color-danger)', fontSize: '12px', fontWeight: 600 }}
               onClick={handleLogout}
             >
-              <LogOut size={15} /> Sign Out
+              <LogOut size={14} /> Sign Out
             </button>
           </div>
         </div>

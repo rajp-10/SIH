@@ -11,7 +11,8 @@ import {
   Lock,
   Mail,
   ArrowLeft,
-  Info
+  Info,
+  UserCheck
 } from 'lucide-react';
 import { useStore } from '../context/Store';
 import { DEMO_USERS, DEMO_DEFAULT_PASSWORD } from '../data/auth';
@@ -60,7 +61,7 @@ export function SignInPage() {
       } else {
         setError(result.error || 'Authentication failed. Please verify credentials.');
       }
-    }, 200);
+    }, 180);
   };
 
   const handleQuickSelect = (user: DemoUser) => {
@@ -79,7 +80,7 @@ export function SignInPage() {
       } else {
         setError(result.error || 'Authentication failed. Please verify credentials.');
       }
-    }, 180);
+    }, 160);
   };
 
   return (
@@ -95,7 +96,8 @@ export function SignInPage() {
       {/* Header bar with Back Link */}
       <header
         style={{
-          padding: '16px clamp(20px, 4vw, 48px)',
+          padding: '0 clamp(20px, 4vw, 48px)',
+          height: '60px',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
@@ -108,22 +110,22 @@ export function SignInPage() {
           style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '8px',
-            fontSize: 'var(--text-sm)',
+            gap: '6px',
+            fontSize: 'var(--text-xs)',
             fontWeight: 600,
-            color: 'var(--color-primary)',
+            color: 'var(--color-heading)',
             textDecoration: 'none'
           }}
         >
-          <ArrowLeft size={16} />
+          <ArrowLeft size={14} />
           <span>Return to Overview</span>
         </Link>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <div
             style={{
-              width: '32px',
-              height: '32px',
+              width: '26px',
+              height: '26px',
               borderRadius: 'var(--radius-xs)',
               background: 'var(--color-primary)',
               color: '#FFFFFF',
@@ -132,9 +134,9 @@ export function SignInPage() {
               justifyContent: 'center'
             }}
           >
-            <Landmark size={18} />
+            <Landmark size={14} />
           </div>
-          <span style={{ fontWeight: 800, fontSize: '16px', color: 'var(--color-heading)', letterSpacing: '-0.02em' }}>
+          <span style={{ fontWeight: 750, fontSize: '15px', color: 'var(--color-heading)' }}>
             FDR Guardian
           </span>
         </div>
@@ -147,50 +149,51 @@ export function SignInPage() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          padding: '40px 20px'
+          padding: '36px 20px'
         }}
       >
         <div
           style={{
             width: '100%',
-            maxWidth: '480px',
+            maxWidth: '440px',
             background: 'var(--color-surface)',
-            borderRadius: 'var(--radius-md)',
+            borderRadius: 'var(--radius-sm)',
             border: '1px solid var(--color-border)',
-            boxShadow: 'var(--shadow-md)',
-            padding: '36px 32px'
+            boxShadow: 'var(--shadow-sm)',
+            padding: '32px 28px'
           }}
         >
           {/* Logo / Header */}
-          <div style={{ textAlign: 'center', marginBottom: '28px' }}>
+          <div style={{ textAlign: 'center', marginBottom: '24px' }}>
             <div
               style={{
-                width: '48px',
-                height: '48px',
+                width: '42px',
+                height: '42px',
                 borderRadius: 'var(--radius-sm)',
-                background: 'var(--color-primary)',
-                color: '#FFFFFF',
+                background: 'var(--color-surface-muted)',
+                border: '1px solid var(--color-border)',
+                color: 'var(--color-primary)',
                 display: 'inline-flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                marginBottom: '16px'
+                marginBottom: '12px'
               }}
             >
-              <Landmark size={26} />
+              <Landmark size={22} />
             </div>
             <h1
               style={{
-                fontSize: 'var(--text-2xl)',
-                fontWeight: 800,
+                fontSize: '20px',
+                fontWeight: 750,
                 color: 'var(--color-heading)',
-                margin: '0 0 6px',
-                letterSpacing: '-0.02em'
+                margin: '0 0 4px',
+                letterSpacing: '-0.015em'
               }}
             >
-              Welcome Back
+              Sign In to FDR Guardian
             </h1>
-            <p style={{ margin: 0, fontSize: 'var(--text-sm)', color: 'var(--color-text-muted)' }}>
-              Sign in to access institutional FDR lifecycle records
+            <p style={{ margin: 0, fontSize: 'var(--text-xs)', color: 'var(--color-text-muted)' }}>
+              Institutional fixed deposit record & regulatory workflow access
             </p>
           </div>
 
@@ -201,26 +204,26 @@ export function SignInPage() {
               style={{
                 display: 'flex',
                 alignItems: 'flex-start',
-                gap: '10px',
-                padding: '12px 14px',
+                gap: '8px',
+                padding: '10px 12px',
                 borderRadius: 'var(--radius-xs)',
                 background: 'var(--color-alert-danger-bg)',
-                border: '1px solid var(--color-danger)',
+                border: '1px solid var(--color-danger-border)',
                 color: 'var(--color-danger-text)',
                 fontSize: 'var(--text-xs)',
-                marginBottom: '20px',
+                marginBottom: '16px',
                 lineHeight: 1.45
               }}
             >
-              <AlertCircle size={16} style={{ flexShrink: 0, marginTop: '2px', color: 'var(--color-danger)' }} />
+              <AlertCircle size={15} style={{ flexShrink: 0, marginTop: '2px', color: 'var(--color-danger)' }} />
               <div>{error}</div>
             </div>
           )}
 
-          {/* Form */}
+          {/* Primary Authentication Form */}
           <form onSubmit={handleSubmit}>
-            <div className="field" style={{ marginBottom: '18px' }}>
-              <label htmlFor="signin-email" style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--color-text)' }}>
+            <div className="field" style={{ marginBottom: '16px' }}>
+              <label htmlFor="signin-email" style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--color-heading)' }}>
                 Institutional Email Address
               </label>
               <div style={{ position: 'relative' }}>
@@ -233,16 +236,16 @@ export function SignInPage() {
                   disabled={isLoading}
                   required
                   style={{
-                    paddingLeft: '38px',
+                    paddingLeft: '34px',
                     fontSize: 'var(--text-sm)',
                     borderColor: error ? 'var(--color-danger)' : undefined
                   }}
                 />
                 <Mail
-                  size={16}
+                  size={15}
                   style={{
                     position: 'absolute',
-                    left: '12px',
+                    left: '11px',
                     top: '50%',
                     transform: 'translateY(-50%)',
                     color: 'var(--color-text-muted)',
@@ -252,9 +255,9 @@ export function SignInPage() {
               </div>
             </div>
 
-            <div className="field" style={{ marginBottom: '20px' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
-                <label htmlFor="signin-password" style={{ fontSize: 'var(--text-xs)', fontWeight: 600, margin: 0, color: 'var(--color-text)' }}>
+            <div className="field" style={{ marginBottom: '18px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
+                <label htmlFor="signin-password" style={{ fontSize: 'var(--text-xs)', fontWeight: 600, margin: 0, color: 'var(--color-heading)' }}>
                   Password
                 </label>
                 <button
@@ -264,11 +267,10 @@ export function SignInPage() {
                     background: 'none',
                     border: 'none',
                     padding: 0,
-                    fontSize: 'var(--text-xs)',
-                    color: 'var(--color-primary)',
+                    fontSize: '11px',
+                    color: 'var(--color-heading)',
                     cursor: 'pointer',
-                    textDecoration: 'underline',
-                    fontWeight: 500
+                    textDecoration: 'underline'
                   }}
                 >
                   Forgot Password?
@@ -284,17 +286,17 @@ export function SignInPage() {
                   disabled={isLoading}
                   required
                   style={{
-                    paddingLeft: '38px',
-                    paddingRight: '40px',
+                    paddingLeft: '34px',
+                    paddingRight: '36px',
                     fontSize: 'var(--text-sm)',
                     borderColor: error ? 'var(--color-danger)' : undefined
                   }}
                 />
                 <Lock
-                  size={16}
+                  size={15}
                   style={{
                     position: 'absolute',
-                    left: '12px',
+                    left: '11px',
                     top: '50%',
                     transform: 'translateY(-50%)',
                     color: 'var(--color-text-muted)',
@@ -307,7 +309,7 @@ export function SignInPage() {
                   aria-label={showPassword ? 'Hide password' : 'Show password'}
                   style={{
                     position: 'absolute',
-                    right: '10px',
+                    right: '8px',
                     top: '50%',
                     transform: 'translateY(-50%)',
                     background: 'none',
@@ -320,7 +322,7 @@ export function SignInPage() {
                     justifyContent: 'center'
                   }}
                 >
-                  {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                  {showPassword ? <EyeOff size={15} /> : <Eye size={15} />}
                 </button>
               </div>
             </div>
@@ -331,13 +333,13 @@ export function SignInPage() {
               className="btn btn-primary"
               style={{
                 width: '100%',
-                padding: '12px',
+                padding: '10px',
                 fontSize: 'var(--text-sm)',
                 fontWeight: 650,
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                gap: '8px'
+                gap: '6px'
               }}
             >
               {isLoading ? (
@@ -345,18 +347,18 @@ export function SignInPage() {
               ) : (
                 <>
                   <span>Sign In</span>
-                  <ArrowRight size={16} />
+                  <ArrowRight size={15} />
                 </>
               )}
             </button>
           </form>
 
-          {/* Demo Persona Quick-Fill */}
+          {/* Visually Secondary Demo Account Access */}
           <div
             style={{
-              marginTop: '28px',
-              paddingTop: '20px',
-              borderTop: '1px solid var(--color-border)'
+              marginTop: '24px',
+              paddingTop: '16px',
+              borderTop: '1px solid var(--color-border-subtle)'
             }}
           >
             <div
@@ -364,26 +366,26 @@ export function SignInPage() {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
-                marginBottom: '12px'
+                marginBottom: '8px'
               }}
             >
               <span
                 style={{
-                  fontSize: '11px',
+                  fontSize: '10px',
                   fontWeight: 700,
                   textTransform: 'uppercase',
-                  color: 'var(--color-primary)',
+                  color: 'var(--color-text-muted)',
                   letterSpacing: '0.06em'
                 }}
               >
                 Saved Profiles
               </span>
               <span style={{ fontSize: '10px', color: 'var(--color-text-muted)' }}>
-                Click to autofill & authenticate
+                One-click test profile
               </span>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '10px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
               {DEMO_USERS.map(u => {
                 const isSelected = email.toLowerCase() === u.email.toLowerCase();
                 return (
@@ -393,24 +395,38 @@ export function SignInPage() {
                     onClick={() => handleQuickSelect(u)}
                     disabled={isLoading}
                     style={{
-                      textAlign: 'left',
-                      padding: '10px 12px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      padding: '7px 10px',
                       borderRadius: 'var(--radius-xs)',
-                      border: isSelected ? '2px solid var(--color-primary)' : '1px solid var(--color-border)',
-                      background: isSelected ? 'var(--color-surface-subtle)' : 'var(--color-surface)',
+                      border: `1px solid ${isSelected ? 'var(--color-dusty-blue)' : 'var(--color-border)'}`,
+                      background: isSelected ? 'var(--color-powder-blue)' : 'var(--color-surface)',
                       cursor: 'pointer',
-                      transition: 'var(--transition-fast)'
+                      transition: 'var(--transition-fast)',
+                      textAlign: 'left'
                     }}
                   >
-                    <div style={{ fontSize: '12px', fontWeight: 700, color: 'var(--color-heading)' }}>
-                      {u.title || u.role}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <span
+                        style={{
+                          width: '6px',
+                          height: '6px',
+                          borderRadius: '50%',
+                          background: isSelected ? 'var(--color-primary)' : 'var(--color-border)'
+                        }}
+                      />
+                      <span style={{ fontSize: '12px', fontWeight: 650, color: 'var(--color-heading)' }}>
+                        {u.name}
+                      </span>
+                      <span style={{ fontSize: '11px', color: 'var(--color-text-muted)' }}>
+                        · {u.title || u.role}
+                      </span>
                     </div>
-                    <div style={{ fontSize: '11px', color: 'var(--color-text)', marginTop: '2px' }}>
-                      {u.name}
-                    </div>
-                    <div style={{ fontSize: '10px', color: 'var(--color-text-muted)', marginTop: '2px', wordBreak: 'break-all' }}>
-                      {u.email}
-                    </div>
+
+                    <span style={{ fontSize: '10px', color: 'var(--color-text-muted)' }}>
+                      {u.role === 'Institution User' ? 'Institution Desk' : u.role === 'AICTE Reviewing Official' ? 'Scrutiny Cell' : u.role === 'Approving Authority' ? 'Sanctions' : 'Technical'}
+                    </span>
                   </button>
                 );
               })}
@@ -420,21 +436,21 @@ export function SignInPage() {
           {/* Provisioning Notice */}
           <div
             style={{
-              marginTop: '22px',
-              padding: '10px 12px',
+              marginTop: '18px',
+              padding: '8px 10px',
               borderRadius: 'var(--radius-xs)',
-              background: 'var(--color-surface-subtle)',
-              border: '1px solid var(--color-border)',
+              background: 'var(--color-surface-muted)',
+              border: '1px solid var(--color-border-subtle)',
               fontSize: '11px',
-              color: 'var(--color-text-subtle)',
+              color: 'var(--color-text-muted)',
               lineHeight: 1.45,
               display: 'flex',
-              gap: '8px'
+              gap: '6px'
             }}
           >
-            <Info size={16} color="var(--color-primary)" style={{ flexShrink: 0, marginTop: '1px' }} />
+            <Info size={14} color="var(--color-primary)" style={{ flexShrink: 0, marginTop: '2px' }} />
             <div>
-              Privileged roles (Reviewing Official, Approving Authority, System Administrator) are provisioned through internal administration. Public self-registration is disabled.
+              Privileged roles (Reviewer, Approver, Admin) are provisioned through internal administration.
             </div>
           </div>
         </div>
@@ -445,26 +461,26 @@ export function SignInPage() {
         <div className="dialog-backdrop" onClick={() => setForgotPasswordOpen(false)}>
           <div
             className="dialog"
-            style={{ maxWidth: '440px' }}
+            style={{ maxWidth: '420px' }}
             onClick={e => e.stopPropagation()}
           >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '14px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '12px' }}>
               <div
                 style={{
-                  width: '36px',
-                  height: '36px',
+                  width: '32px',
+                  height: '32px',
                   borderRadius: 'var(--radius-xs)',
-                  background: 'var(--color-surface-subtle)',
-                  color: 'var(--color-primary)',
+                  background: 'var(--color-powder-blue)',
+                  color: 'var(--color-heading)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center'
                 }}
               >
-                <ShieldCheck size={20} />
+                <ShieldCheck size={18} />
               </div>
               <div>
-                <h3 style={{ margin: 0, fontSize: 'var(--text-lg)', color: 'var(--color-heading)' }}>
+                <h3 style={{ margin: 0, fontSize: '16px', color: 'var(--color-heading)' }}>
                   Password Assistance
                 </h3>
                 <small style={{ color: 'var(--color-text-muted)', fontSize: '11px' }}>
@@ -477,20 +493,21 @@ export function SignInPage() {
               <div>
                 <div
                   style={{
-                    padding: '12px 14px',
+                    padding: '10px 12px',
                     borderRadius: 'var(--radius-xs)',
                     background: 'var(--color-success-bg)',
                     color: 'var(--color-success-text)',
-                    fontSize: 'var(--text-sm)',
-                    marginBottom: '18px',
+                    border: '1px solid var(--color-success-border)',
+                    fontSize: 'var(--text-xs)',
+                    marginBottom: '16px',
                     display: 'flex',
                     alignItems: 'center',
                     gap: '8px'
                   }}
                 >
-                  <CheckCircle2 size={16} />
+                  <CheckCircle2 size={15} />
                   <span>
-                    Password reset instructions dispatched to <strong>{email}</strong>.
+                    Recovery instructions dispatched to <strong>{email}</strong>.
                   </span>
                 </div>
                 <button
@@ -507,11 +524,11 @@ export function SignInPage() {
               </div>
             ) : (
               <div>
-                <p style={{ fontSize: 'var(--text-sm)', color: 'var(--color-text)', lineHeight: 1.5, margin: '0 0 16px' }}>
+                <p style={{ fontSize: 'var(--text-xs)', color: 'var(--color-text)', lineHeight: 1.5, margin: '0 0 14px' }}>
                   Enter your registered institutional email to receive secure password recovery instructions.
                 </p>
-                <div className="field" style={{ marginBottom: '18px' }}>
-                  <label htmlFor="recovery-email" style={{ fontSize: 'var(--text-xs)' }}>Registered Email</label>
+                <div className="field" style={{ marginBottom: '16px' }}>
+                  <label htmlFor="recovery-email" style={{ fontSize: '11px' }}>Registered Email</label>
                   <input
                     id="recovery-email"
                     type="email"
@@ -520,17 +537,17 @@ export function SignInPage() {
                     placeholder="name@institution.ac.in"
                   />
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px' }}>
+                <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '8px' }}>
                   <button
                     type="button"
-                    className="btn btn-secondary"
+                    className="btn btn-secondary btn-small"
                     onClick={() => setForgotPasswordOpen(false)}
                   >
                     Cancel
                   </button>
                   <button
                     type="button"
-                    className="btn btn-primary"
+                    className="btn btn-primary btn-small"
                     onClick={() => setForgotSent(true)}
                   >
                     Send Recovery Link
@@ -545,7 +562,7 @@ export function SignInPage() {
       {/* Footer */}
       <footer
         style={{
-          padding: '16px 32px',
+          padding: '14px 24px',
           textAlign: 'center',
           fontSize: '11px',
           color: 'var(--color-text-muted)',

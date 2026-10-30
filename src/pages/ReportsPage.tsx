@@ -22,21 +22,21 @@ export function ReportsPage() {
 
   // Dynamic lifecycle counts
   const lifecycleData = [
-    { name: 'Active', count: items.filter(i => i.lifecycle === 'Active').length, color: '#123B3A' },
-    { name: 'Near Maturity', count: items.filter(i => i.lifecycle === 'Near Maturity').length, color: '#C69A55' },
-    { name: 'Under Approval', count: items.filter(i => i.lifecycle === 'Under Approval').length, color: '#19324D' },
-    { name: 'Released', count: items.filter(i => i.lifecycle === 'Released').length, color: '#65727A' },
-    { name: 'Archived', count: items.filter(i => i.lifecycle === 'Archived').length, color: '#8C9A94' }
+    { name: 'Active', count: items.filter(i => i.lifecycle === 'Active').length, color: '#344B5E' },
+    { name: 'Near Maturity', count: items.filter(i => i.lifecycle === 'Near Maturity').length, color: '#D9A99B' },
+    { name: 'Under Approval', count: items.filter(i => i.lifecycle === 'Under Approval').length, color: '#A9C5D8' },
+    { name: 'Released', count: items.filter(i => i.lifecycle === 'Released').length, color: '#687985' },
+    { name: 'Archived', count: items.filter(i => i.lifecycle === 'Archived').length, color: '#B9CDBF' }
   ];
 
   // Dynamic verification counts
   const verificationData = [
-    { name: 'Verified', count: items.filter(i => i.verification === 'Verified by Authorized Reviewer').length, color: '#1D6B4E' },
-    { name: 'Pending', count: items.filter(i => i.verification === 'Pending').length, color: '#C69A55' },
-    { name: 'Under Review', count: items.filter(i => i.verification === 'Under Review').length, color: '#19324D' },
-    { name: 'Discrepancy', count: items.filter(i => i.verification === 'Discrepancy Found').length, color: '#B92D3B' },
-    { name: 'Correction', count: items.filter(i => i.verification === 'Correction Required').length, color: '#9E6E12' },
-    { name: 'Rejected', count: items.filter(i => i.verification === 'Rejected').length, color: '#941F2B' }
+    { name: 'Verified', count: items.filter(i => i.verification === 'Verified by Authorized Reviewer').length, color: '#4E7A5D' },
+    { name: 'Pending', count: items.filter(i => i.verification === 'Pending').length, color: '#D9A99B' },
+    { name: 'Under Review', count: items.filter(i => i.verification === 'Under Review').length, color: '#A9C5D8' },
+    { name: 'Discrepancy', count: items.filter(i => i.verification === 'Discrepancy Found').length, color: '#B43339' },
+    { name: 'Correction', count: items.filter(i => i.verification === 'Correction Required').length, color: '#824436' },
+    { name: 'Rejected', count: items.filter(i => i.verification === 'Rejected').length, color: '#6E1C21' }
   ];
 
   // Request statuses

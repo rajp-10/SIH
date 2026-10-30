@@ -45,7 +45,7 @@ export function MetricCard({
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
-        padding: '18px 20px',
+        padding: '12px 14px',
         borderRadius: 'var(--radius-sm)',
         background: 'var(--color-surface)',
         border: '1px solid var(--color-border)',
@@ -53,22 +53,22 @@ export function MetricCard({
         transition: 'var(--transition-fast)'
       }}
     >
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
-        <span style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '4px' }}>
+        <span style={{ fontSize: '11px', fontWeight: 650, color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
           {label}
         </span>
         {icon && (
-          <div style={{ color: accent ? 'var(--color-accent)' : 'var(--color-primary)', opacity: 0.9 }}>
+          <div style={{ color: 'var(--color-secondary)', opacity: 0.85 }}>
             {icon}
           </div>
         )}
       </div>
 
-      <strong style={{ fontSize: 'var(--text-2xl)', fontWeight: 700, color: getValueColor(), lineHeight: 1.2, margin: '4px 0' }}>
+      <strong style={{ fontSize: '20px', fontWeight: 750, color: getValueColor(), lineHeight: 1.15, margin: '2px 0' }}>
         {value}
       </strong>
 
-      <span style={{ fontSize: 'var(--text-xs)', color: 'var(--color-text-muted)', marginTop: '4px' }}>
+      <span style={{ fontSize: '11px', color: 'var(--color-text-muted)', marginTop: '2px' }}>
         {note}
       </span>
     </div>

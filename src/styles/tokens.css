@@ -1,91 +1,115 @@
 /*
- * FDR Guardian design tokens — Institutional enterprise fintech design system.
- * Brand palette:
- *   Deep Teal #123B3A · Midnight Navy #19324D · Warm Ivory #F7F6F0 · Soft Sage #DCEAE5 · Muted Gold #C69A55
- * Design principles:
- *   - Deep Teal for primary actions and brand elements.
- *   - Midnight Navy for headings and structural typography.
- *   - Warm Ivory for main application background canvas.
- *   - Pure White for content cards and elevation surfaces.
- *   - Soft Sage for subtle highlighted sections, secondary backgrounds and chips.
- *   - Muted Gold used sparingly for key accents and focus-of-attention indicators.
+ * FDR Guardian design tokens — Refined Light Sky Blue Institutional System.
+ * Exact tokens:
+ *   Main background:   #EAF5FC
+ *   Powder blue:       #CFE7F5
+ *   White surfaces:    #FFFFFF
+ *   Soft ivory:        #F5F4EF
+ *   Dusty blue:        #A9C5D8
+ *   Slate blue text:   #344B5E
+ *   Muted eucalyptus:  #B9CDBF
+ *   Primary dark text: #293B49
+ *   Secondary text:    #687985
+ *   Borders:           #DCE6EC
+ *   Muted terracotta:  #D9A99B
  */
+
 :root {
-  /* ── Brand: Institutional Deep Teal, Midnight Navy & Muted Gold ── */
-  --color-primary: #123B3A;             /* Deep Teal: primary buttons, brand accents */
-  --color-primary-hover: #0E2E2D;       /* Deeper teal on interaction */
-  --color-primary-subtle: #EBF2F0;      /* Soft teal wash */
-  --color-secondary: #19324D;           /* Midnight Navy: headings, structural elements */
-  --color-secondary-hover: #122438;     /* Deeper navy on hover */
-  --color-secondary-subtle: #E8EEF5;    /* Soft navy wash */
-  --color-accent: #C69A55;              /* Muted Gold: focus-of-attention, key badges, markers */
-  --color-accent-hover: #B38844;        /* Deeper gold hover */
-  --color-accent-subtle: #FAF5EB;       /* Warm gold tint */
+  /* ── Core Brand & Typography Tokens ────────────────────── */
+  --color-primary: #344B5E;             /* Slate blue: headings, primary buttons, key actions */
+  --color-primary-hover: #293B49;       /* Darker slate */
+  --color-primary-subtle: #CFE7F5;      /* Powder blue: active highlights, badges */
+  --color-secondary: #687985;           /* Secondary text / quiet icons */
+  --color-secondary-hover: #50616D;
+  --color-accent: #CFE7F5;              /* Powder blue */
+  --color-accent-hover: #BEDEEF;
+
+  /* Named palette aliases */
+  --color-powder-blue: #CFE7F5;
+  --color-dusty-blue: #A9C5D8;
+  --color-slate-blue: #344B5E;
+  --color-eucalyptus: #B9CDBF;
+  --color-terracotta: #D9A99B;
 
   /* ── Surfaces ──────────────────────────────────────────── */
-  --color-background: #F7F6F0;          /* Warm Ivory: main landing & app canvas */
-  --color-surface: #FFFFFF;             /* Pure White: cards & content surfaces */
-  --color-surface-subtle: #DCEAE5;      /* Soft Sage: subtle highlighted sections & chips */
-  --color-surface-muted: #F0F4F1;       /* Light neutral tint */
-  --color-overlay: rgba(18, 59, 58, 0.45);
+  --color-background: #EAF5FC;          /* Main canvas: Light sky blue */
+  --color-surface: #FFFFFF;             /* White: forms, tables, content surfaces */
+  --color-surface-subtle: #CFE7F5;      /* Powder blue */
+  --color-surface-ivory: #F5F4EF;       /* Soft ivory */
+  --color-surface-muted: #F4F8FB;       /* Faint blue-tinted neutral */
+  --color-overlay: rgba(41, 59, 73, 0.45);
 
   /* ── Text ──────────────────────────────────────────────── */
-  --color-text: #303B42;                /* Deep Charcoal: body text */
-  --color-heading: #19324D;             /* Midnight Navy: headings & titles */
-  --color-text-muted: #65727A;          /* Slate: secondary & muted text */
-  --color-text-subtle: #4D5961;         /* Mid-slate: descriptions */
-  --color-text-inverse: #FFFFFF;        /* Pure white on dark surfaces */
+  --color-text: #293B49;                /* Primary dark text */
+  --color-heading: #344B5E;             /* Slate blue text */
+  --color-text-muted: #687985;          /* Secondary text */
+  --color-text-subtle: #50616D;
+  --color-text-inverse: #FFFFFF;
 
   /* ── Lines & Borders ───────────────────────────────────── */
-  --color-border: #DCE2DC;              /* Soft Neutral: dividers & card outlines */
-  --color-border-subtle: #E8ECE8;       /* Very faint border */
-  --color-input-border: #B8C2B9;        /* Form controls */
-  --color-focus: #123B3A;               /* Focus ring on light surfaces */
-  --color-focus-on-dark: #C69A55;       /* Focus ring on dark teal surfaces */
-  --color-disabled: #E4E8E4;
+  --color-border: #DCE6EC;              /* 1px subtle border */
+  --color-border-subtle: #E8F0F5;
+  --color-input-border: #C8D7E0;
+  --color-focus: #344B5E;
+  --color-focus-on-dark: #CFE7F5;
+  --color-disabled: #E5EDF2;
 
   /* ── Status Indicators ─────────────────────────────────── */
-  --color-success: #1D6B4E;
-  --color-success-bg: #E3F3EC;
-  --color-success-text: #16533D;
-  --color-warning: #9E6E12;
-  --color-warning-bg: #FBF2DF;
-  --color-warning-text: #7A540B;
-  --color-danger: #B92D3B;
-  --color-danger-bg: #FDECEE;
-  --color-danger-text: #941F2B;
-  --color-info: #19324D;
-  --color-info-bg: #E8EEF5;
-  --color-info-text: #19324D;
-  --color-neutral-bg: #EAECEB;
-  --color-neutral-text: #4D5961;
-  --color-alert-warning-bg: #FAF5EB;
-  --color-alert-danger-bg: #FDF0F1;
-  --color-unread-bg: #FBF6EB;
+  /* Eucalyptus for success */
+  --color-success: #2E6545;
+  --color-success-bg: #EDF5F0;
+  --color-success-border: #B9CDBF;
+  --color-success-text: #235237;
 
-  /* ── Text/lines placed on Deep Teal surfaces ───────────── */
+  /* Terracotta for warning */
+  --color-warning: #945344;
+  --color-warning-bg: #FAF2EE;
+  --color-warning-border: #D9A99B;
+  --color-warning-text: #824436;
+
+  /* Red for error / rejection */
+  --color-danger: #B43339;
+  --color-danger-bg: #FDF2F2;
+  --color-danger-border: #F1C2C2;
+  --color-danger-text: #962228;
+
+  /* Info / Active */
+  --color-info: #344B5E;
+  --color-info-bg: #CFE7F5;
+  --color-info-border: #A9C5D8;
+  --color-info-text: #293B49;
+
+  --color-neutral-bg: #EAF1F5;
+  --color-neutral-text: #50616D;
+
+  /* Alert backgrounds */
+  --color-alert-warning-bg: #FAF2EE;
+  --color-alert-danger-bg: #FDF2F2;
+  --color-unread-bg: #EDF5FA;
+
+  /* ── Surfaces on Primary ───────────────────────────────── */
   --color-on-primary: #FFFFFF;
-  --color-on-accent: #19324D;
-  --color-on-primary-muted: #D5E2DF;
-  --color-on-primary-faint: #A4BDB7;
+  --color-on-accent: #293B49;
+  --color-on-primary-muted: #CFE7F5;
+  --color-on-primary-faint: #A9C5D8;
   --color-on-primary-hover: rgba(255, 255, 255, 0.12);
-  --color-on-primary-line: rgba(255, 255, 255, 0.16);
+  --color-on-primary-line: rgba(255, 255, 255, 0.18);
 
   /* ── Row / list helpers ───────────────────────────────── */
-  --color-row-hover: #F9FAF8;
-  --color-primary-tint: #EBF2F0;
+  --color-row-hover: #F5FAFD;
+  --color-primary-tint: #CFE7F5;
 
-  /* ── Elevation (restrained, clean shadows) ─────────────── */
-  --shadow-xs: 0 1px 2px rgba(25, 50, 77, 0.04);
-  --shadow-sm: 0 1px 3px rgba(25, 50, 77, 0.06), 0 1px 2px rgba(18, 59, 58, 0.03);
-  --shadow-md: 0 4px 14px rgba(25, 50, 77, 0.07);
-  --shadow-lg: 0 12px 30px rgba(25, 50, 77, 0.09);
+  /* ── Restrained Elevation: No heavy shadows ────────────── */
+  --shadow-xs: 0 1px 2px rgba(41, 59, 73, 0.04);
+  --shadow-sm: 0 1px 3px rgba(41, 59, 73, 0.05);
+  --shadow-md: 0 3px 8px rgba(41, 59, 73, 0.07);
+  --shadow-lg: 0 8px 18px rgba(41, 59, 73, 0.08);
 
-  /* ── Shape: restrained radii; civic software, not a consumer app ── */
-  --radius-xs: 3px;
-  --radius-sm: 5px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
+  /* ── Shape: Restrained corner radii, NOT bubble cards ──── */
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
   --radius-full: 9999px;
 
   /* ── Space ─────────────────────────────────────────────── */
@@ -99,23 +123,21 @@
   --space-10: 40px;
   --space-12: 48px;
 
-  /* ── Type: serif display for headings gives an editorial, institutional voice;
-        falls back gracefully because no web font is required. ── */
-  --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-display: "Source Serif 4", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  /* ── Typography: Crisp, professional sans-serif ───────── */
+  --font-sans: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   --text-xs: 12px;
   --text-sm: 13px;
   --text-md: 14px;
   --text-base: 15px;
   --text-lg: 18px;
-  --text-xl: 24px;
-  --text-2xl: 34px;
-  --text-3xl: 44px;
+  --text-xl: 22px;
+  --text-2xl: 28px;
+  --text-3xl: 36px;
 
   /* ── Motion ────────────────────────────────────────────── */
-  --transition-fast: 140ms ease;
-  --transition-normal: 220ms ease;
+  --transition-fast: 120ms ease;
+  --transition-normal: 180ms ease;
 }
 
 *,
@@ -146,6 +168,8 @@ h4,
 h5,
 h6 {
   color: var(--color-heading);
+  letter-spacing: -0.015em;
+  font-weight: 700;
 }
 
 button,
@@ -170,18 +194,13 @@ a {
 }
 
 :focus-visible {
-  outline: 3px solid var(--color-focus);
-  outline-offset: 2px;
-}
-
-.sidebar :focus-visible,
-.landing-cta :focus-visible {
-  outline-color: var(--color-focus-on-dark);
+  outline: 2px solid var(--color-focus);
+  outline-offset: 1px;
 }
 
 ::selection {
-  background: var(--color-secondary);
-  color: var(--color-primary);
+  background: var(--color-powder-blue);
+  color: var(--color-heading);
 }
 
 .sr-only {
@@ -197,7 +216,6 @@ a {
 }
 
 @media (prefers-reduced-motion: reduce) {
-
   *,
   *::before,
   *::after {
